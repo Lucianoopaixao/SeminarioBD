@@ -1,0 +1,14 @@
+services:
+  neo4j:
+    image: neo4j:latest
+    container_name: seminariobd
+    ports:
+      - "7474:7474" # neo4j
+      - "7687:7687" # python
+    environment:
+      - NEO4J_AUTH=neo4j/projetobd12345
+    volumes:
+      - neo4j_data:/data # persiste os dados caso o container reinicie
+
+volumes:
+  neo4j_data:
