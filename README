@@ -1,0 +1,14 @@
+##  Arquitetura do Projeto
+
+Para garantir a organização, segurança e escalabilidade do código, este projeto foi estruturado utilizando o **Padrão de Repositório (Repository Pattern)** e o princípio de **Separação de Responsabilidades (Separation of Concerns)**.
+
+A estrutura de diretórios está organizada da seguinte forma:
+
+
+SeminarioBD/
+│
+├── .env                  # Variáveis de ambiente e credenciais protegidas (não versionado)
+├── .gitignore            # Arquivo para ignorar o .env e arquivos temporários no Git
+├── database.py           # Módulo de Infraestrutura: Gerencia a conexão com o banco
+├── repositories.py       # Módulo de Acesso a Dados: Gerencia as consultas (Cypher)
+└── app.py                # Módulo de Aplicação: O programa principal (ponto de entrada)

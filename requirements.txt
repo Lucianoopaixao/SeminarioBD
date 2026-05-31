@@ -1,0 +1,3 @@
+#rode pip install -r requirements.txt
+neo4j
+dotenv

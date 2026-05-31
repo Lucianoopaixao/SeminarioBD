@@ -6,7 +6,7 @@ services:
       - "7474:7474" # neo4j
       - "7687:7687" # python
     environment:
-      - NEO4J_AUTH=neo4j/projetobd12345
+     - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD}
     volumes:
       - neo4j_data:/data # persiste os dados caso o container reinicie
 
