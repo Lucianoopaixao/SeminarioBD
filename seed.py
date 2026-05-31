@@ -31,7 +31,7 @@ def povoar_base_de_dados(driver):
     MERGE (filme)-[:DO_GENERO]->(g)
     """
 
-    # Query extraída do documento para Utilizadores e Notas
+   
     query_usuarios = """
     UNWIND [
         {usuario: 'Luciano', titulo:'As Vantagens de Ser Invisível', nota:5},
