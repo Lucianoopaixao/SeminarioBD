@@ -30,3 +30,37 @@ class MovieRepository:
         with self.driver.session() as session:
             resultado = session.run(query, nome=nome_usuario)
             return [{"Filme": reg["filme"], "Pontos": reg["pontuacao"]} for reg in resultado]
+        
+    def filmes_mais_bem_avaliados(self):
+        query = """
+        MATCH (:Usuario)-[a:ASSISTIU]->(f:Filme)
+        RETURN f.titulo AS filme,
+               round(avg(a.nota), 2) AS nota_media,
+               count(*) AS qtd_avaliacoes
+        ORDER BY nota_media DESC, qtd_avaliacoes DESC;
+        """
+        with self.driver.session() as session:
+            resultados = session.run(query)
+            return [{"Filme": reg["filme"], "Nota_Media": reg["nota_media"], "Qtd_Avaliacoes": reg["qtd_avaliacoes"]} for reg in resultados]
+
+    def usuario_mais_parecido(self, nome_usuario):
+        query = """
+        MATCH (eu:Usuario {nome: $nome_usuario})-[:ASSISTIU]->(f:Filme)<-[:ASSISTIU]-(outro:Usuario)
+        RETURN outro.nome AS usuario,
+               count(f) AS filmes_em_comum,
+               collect(f.titulo) AS quais
+        ORDER BY filmes_em_comum DESC;
+        """
+        with self.driver.session() as session:
+            resultados = session.run(query, nome_usuario=nome_usuario)
+            return [{"Usuario": reg["usuario"], "Filmes_Em_Comum": reg["filmes_em_comum"], "Quais": reg["quais"]} for reg in resultados]
+
+    def generos_mais_populares(self):
+        query = """
+        MATCH (:Usuario)-[:ASSISTIU]->(:Filme)-[:DO_GENERO]->(g:Genero)
+        RETURN g.nome AS genero, count(*) AS visualizacoes
+        ORDER BY visualizacoes DESC;
+        """
+        with self.driver.session() as session:
+            resultados = session.run(query)
+            return [{"Genero": reg["genero"], "Visualizacoes": reg["visualizacoes"]} for reg in resultados]

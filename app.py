@@ -29,6 +29,30 @@ def main():
         for rec in recomendacoes_conteudo:
             print(f"Filme: {rec['Filme']} | Relevância: {rec['Pontos']}")
 
+        print("\n----------------------------------------------------\n")
+
+
+        print("--- Filmes mais bem avaliados (Nota Média) ---")
+        filmes_top = repo.filmes_mais_bem_avaliados()
+        for f in filmes_top:
+            print(f"Filme: {f['Filme']} | Nota Média: {f['Nota_Media']} | Avaliações: {f['Qtd_Avaliacoes']}")
+
+        print("\n----------------------------------------------------\n")
+
+        usuario_vizinho = "Clarissa"
+        print(f"--- Usuário mais parecido com a {usuario_vizinho} ---")
+        vizinhos = repo.usuario_mais_parecido(usuario_vizinho)
+        for v in vizinhos:
+            filmes_comum = ", ".join(v['Quais']) 
+            print(f"Usuário: {v['Usuario']} | Filmes em comum: {v['Filmes_Em_Comum']} | Quais: [{filmes_comum}]")
+
+        print("\n----------------------------------------------------\n")
+
+        print("--- Gêneros mais populares do catálogo ---")
+        generos_pop = repo.generos_mais_populares()
+        for g in generos_pop:
+            print(f"Gênero: {g['Genero']} | Visualizações: {g['Visualizacoes']}")
+
     except Exception as e:
         print(f"Ocorreu um erro na aplicação: {e}")
         
